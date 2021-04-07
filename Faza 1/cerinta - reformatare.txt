@@ -1,0 +1,37 @@
+URMARIRE BUG-URI 
+O firma producatoare de software pune la dispozitia programatorilor si verificatorilor sai un sistem 
+prin care acestia pot sa comunice electronic. 
+Astfel, fiecare dintre angajatii mentionati are la dispoziție un terminal prin care: 
+	•verificatorul poate înregistra un bug, dându-i o denumire si o descriere,
+ 		si un procent aleator de rezolvare al acestuia de catre programator; imediat dupa
+		înregistrarea bug-ului, toti programatorii vad lista bug-urilor actualizata cu 
+		obiectul nou introdus;
+	•programatorul vizualizeaza lista bug-urilor;
+	de asemenea, programatorul poate selecta un bug 
+	din lista si poate declansa un buton prin care declara ca bug-ul a fost eliminat. 
+	->(functionalitate noua) La apasarea butonului, 
+	programatorul rezolva bug-ul pe baza procentului de rezolvare dat.
+	Daca bug-ul este considerat in continuare ca fiind nerezolvat de catre verificator,
+	procentul este modificat (va fi mai mare) 
+	si se va revedea de catre programator pentru rezolvare.
+
+Actori:Programator, Verificator.
+Programatorul se autentifica, el are 2 optiuni in aplicatie.
+	1.Sa incarce un cod, acesta este verificat de sistem. Daca este "bug-free", programatorul este anuntat
+	   de acest aspect, altfel codul apare intr-o lista de revizie pentru verificatori.
+	2.Sa vizualizeze lista de bug-uri din codurile sale. Prin selectarea unui bug, acesta anunta daca bug-ul a fost
+	   rezolvat si se asteapta o noua revizie din partea sistemului de verificare
+Verificatorul se autentifica, el are 2 optiuni in meniul sau:
+	1.Sa vizualizeze lista codurilor in revizie. Acesta poate selecta un cod si sa inregistreze cel putin un bug "nascut"
+	   in acel cod, sau poate sa elimine codul din lista de revizie, in orice moment dorit de catre acesta.
+	2.Sa vizualizeze lista bug-urilor. La selectarea unui bug, apar 2 optiuni. Se poate alege inlaturarea acelui bug
+	   ca si cum ar fi fost rezolvat sau a fost doar o eroare a sistemului de verificare, ori se poate opta pentru acordarea
+	   unui procent de rezolvare mai mare decat cel implicit(50%). In momentul in care programatorul anunta ca acel
+   	   bug este rezolvat, sistemul ia in calcul valoarea procentului de rezolvare la verificare.
+
+Concepte de modelare:
+Programatorul si verificatorul au user si parola pentru autentificare (O clasa account).
+Se deduce din aceste date de cont nivelul user-ului (Programator/Verificator(/Admin)).
+Codul - Are o descriere, timpul necesar implementarii, precum si alte aspecte (BRB).
+Bug-ul - are o denumire, o descriere, 
+	un procent de rezolvare(implicit la inregistrarea lui e 50%, se poate modifica de catre verificator(marit))
