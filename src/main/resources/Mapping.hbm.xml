@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class table="Account" name="domain.Account">
+        <id name="id" column="id" type="long">
+            <generator class="increment"/>
+        </id>
+        <property name="username" type="string" column="username"/>
+        <property name="password" type="string" column="password"/>
+
+    </class>
+    <class table="Code" name="domain.Code">
+        <id name="id" column="id" type="long">
+            <generator class="increment"/>
+        </id>
+        <property name="title" type="string" column="title"/>
+        <property name="description" type="string" column="description"/>
+        <property name="noLines" type="int" column="noLines"/>
+        <property name="hoursWorked" type="int" column="hoursWorked"/>
+        <property name="programmerID" type="long" column="programmerID"/>
+    </class>
+    <class table="Verifier" name="domain.Verifier">
+        <id name="id" column="id" type="long">
+            <generator class="increment"/>
+        </id>
+        <property name="accountID" type="long" column="accountID"/>
+        <property name="fullname" type="string" column="fullname"/>
+    </class>
+    <class table="Programmer" name="domain.Programmer">
+        <id name="id" column="id" type="long">
+            <generator class="increment"/>
+        </id>
+        <property name="accountID" type="long" column="accountID"/>
+        <property name="fullname" type="string" column="fullname"/>
+    </class>
+    <class table="Bug" name="domain.Bug">
+        <id name="id" column="id" type="long">
+            <generator class="increment"/>
+        </id>
+        <property name="name" type="string" column="name"/>
+        <property name="description" type="string" column="description"/>
+        <property name="isResolved" type="boolean" column="isResolved"/>
+        <property name="resolvingPercent" type="int" column="resolvingPercent"/>
+    </class>
+    <class table="Analyze" name="domain.Analyze">
+        <id name="id" column="id" type="long">
+            <generator class="increment"/>
+        </id>
+        <property name="codeID" type="long" column="codeID"/>
+        <property name="bugID" type="long" column="bugID"/>
+        <property name="verifierID" type="long" column="verifierID"/>
+    </class>
+</hibernate-mapping>
