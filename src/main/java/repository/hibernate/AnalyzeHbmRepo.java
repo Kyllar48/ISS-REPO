@@ -1,6 +1,7 @@
 package repository.hibernate;
 
 import domain.Analyze;
+import domain.Bug;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -9,6 +10,8 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import repository.generic.AnalyzeRepo;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaDelete;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -38,6 +41,22 @@ public class AnalyzeHbmRepo implements AnalyzeRepo {
 
     @Override
     public Analyze Store(Analyze analyze) {
+        if(Find(analyze.getId())!=null)
+            return analyze;
+        initialize();
+        try(Session session = sessionFactory.openSession()){
+            Transaction tx = null;
+            try{
+                tx = session.beginTransaction();
+                session.save(analyze);
+                tx.commit();
+            }catch (RuntimeException re){
+                if(tx!=null)
+                    tx.rollback();
+                else System.err.println("Error hib " + re);
+            }
+        }
+        close();
         return null;
     }
 
@@ -53,7 +72,22 @@ public class AnalyzeHbmRepo implements AnalyzeRepo {
 
     @Override
     public Analyze Find(Long id) {
-        return null;
+        initialize();
+        Analyze analyze = null;
+        try(Session session = sessionFactory.openSession()){
+            Transaction tx = null;
+            try{
+                tx = session.beginTransaction();
+                analyze = session.createQuery("from Analyze where id=:id",Analyze.class).setParameter("id",id).getSingleResult();
+                tx.commit();
+            }catch (RuntimeException re){
+                if(tx!=null)
+                    tx.rollback();
+                else System.err.println("Error hib " + re);
+            }
+        }
+        close();
+        return analyze;
     }
 
     @Override
@@ -106,5 +140,24 @@ public class AnalyzeHbmRepo implements AnalyzeRepo {
         }
         close();
         return bugIDs;
+    }
+
+    @Override
+    public void RemoveByBugID(Long bugID) {
+        initialize();
+        try(Session session = sessionFactory.openSession()){
+            Transaction tx = null;
+            try{
+                tx = session.beginTransaction();
+                List<Analyze> analyzes = session.createQuery("from Analyze where bugID=:bID",Analyze.class).setParameter("bID",bugID).list();
+                analyzes.forEach(session::delete);
+                tx.commit();
+            }catch (RuntimeException re){
+                if(tx!=null)
+                    tx.rollback();
+                else System.err.println("Error hib " + re);
+            }
+        }
+        close();
     }
 }

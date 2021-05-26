@@ -10,4 +10,6 @@ public interface AnalyzeRepo extends Repository<Long, Analyze> {
     Collection<Long> GetBugIdsByCodeID(Long codeID);
 
     List<Long> GetVerifierRegisteredBugIds(Long verifierID);
+
+    void RemoveByBugID(Long bugID);
 }

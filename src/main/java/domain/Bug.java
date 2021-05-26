@@ -11,6 +11,7 @@ public class Bug extends Entity<Long>{
         this.description = description;
         this.isResolved = isResolved;
         this.resolvingPercent = resolvingPercent;
+        this.setId(0L);
     }
 
     public Bug(){}

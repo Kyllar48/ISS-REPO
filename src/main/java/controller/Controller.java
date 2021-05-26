@@ -13,7 +13,7 @@ public class Controller {
     private User logged;
 
     @FXML
-    Button loginButton;
+    Button loginButton, addCodeButton, addBugButton, updateBugButton, removeBugButton;
     @FXML
     TabPane mainPane;
     @FXML
@@ -29,10 +29,16 @@ public class Controller {
 
 
     @FXML
+    TextField titleCBox,descCBox;
+    @FXML
+    Spinner<Integer> linesCBox,hoursCBox;
+    @FXML
+    TextField nameVBox,descVBox;
+
+    @FXML
     public void initialize() {
         switchTabs(0);
-        loginButton.setOnAction(e ->
-        {
+        loginButton.setOnAction(e -> {
             try {
                 handleLogin();
             } catch (Exception ex) {
@@ -40,6 +46,63 @@ public class Controller {
                 alert.show();
             }
         });
+        addCodeButton.setOnAction(e -> {
+            try{
+                this.serv.RegisterCode(titleCBox.getText(),descCBox.getText(), linesCBox.getValue(), hoursCBox.getValue(), (Programmer) this.logged);
+                new Alert(Alert.AlertType.INFORMATION,"Code registered successfully!").show();
+                fillProgrammerBugTable();
+                clearSelectionsAndFields();
+            }catch (Exception ex){
+                new Alert(Alert.AlertType.WARNING,ex.toString()).show();
+            }
+        });
+        addBugButton.setOnAction(e ->{
+            try{
+                this.serv.RegisterBug(nameVBox.getText(),descVBox.getText(),vCodeTable.getSelectionModel().getSelectedItem(),(Verifier)this.logged);
+                new Alert(Alert.AlertType.INFORMATION,"Bug registered successfully!").show();
+                fillVerifierBugTable();
+                clearSelectionsAndFields();
+            }catch (NullPointerException n){
+                new Alert(Alert.AlertType.WARNING,"Select a bug to proceed registering!").show();
+            }catch (Exception ex){
+                new Alert(Alert.AlertType.WARNING,ex.toString()).show();
+            }
+        });
+        updateBugButton.setOnAction(e ->{
+            try{
+                this.serv.UpdateBugStatus(vBugTable.getSelectionModel().getSelectedItem());
+                new Alert(Alert.AlertType.INFORMATION,"Bug status update successfully!").show();
+                fillVerifierBugTable();
+                clearSelectionsAndFields();
+            }catch (NullPointerException n){
+              new Alert(Alert.AlertType.WARNING,"Select a bug to proceed updating!").show();
+            } catch (Exception ex){
+                new Alert(Alert.AlertType.WARNING,ex.toString()).show();
+            }
+        });
+        removeBugButton.setOnAction(e ->{
+            try{
+                this.serv.RemoveBug(vBugTable.getSelectionModel().getSelectedItem());
+                new Alert(Alert.AlertType.INFORMATION,"Bug removed forever!").show();
+                fillVerifierBugTable();
+                clearSelectionsAndFields();
+            }catch (NullPointerException n){
+                new Alert(Alert.AlertType.WARNING,"Select a bug to proceed removing!").show();
+            }catch (Exception ex){
+                new Alert(Alert.AlertType.WARNING,ex.toString()).show();
+            }
+        });
+    }
+
+    private void clearSelectionsAndFields(){
+        titleCBox.clear();
+        descCBox.clear();
+        linesCBox.getValueFactory().setValue(100);
+        hoursCBox.getValueFactory().setValue(0);
+        nameVBox.clear();
+        descVBox.clear();
+        vBugTable.getSelectionModel().clearSelection();
+        vCodeTable.getSelectionModel().clearSelection();
     }
 
     @FXML

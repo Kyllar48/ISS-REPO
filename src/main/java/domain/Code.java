@@ -13,6 +13,7 @@ public class Code extends Entity<Long>{
         this.noLines = noLines;
         this.hoursWorked = hoursWorked;
         this.programmerID = programmerID;
+        this.setId(0L);
     }
 
     public Code(){}

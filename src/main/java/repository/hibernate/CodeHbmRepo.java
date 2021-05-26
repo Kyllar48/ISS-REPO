@@ -35,6 +35,22 @@ public class CodeHbmRepo implements CodeRepo {
 
     @Override
     public Code Store(Code code) {
+        if(Find(code.getId())!=null)
+            return code;
+        initialize();
+        try(Session session = sessionFactory.openSession()){
+            Transaction tx = null;
+            try{
+                tx = session.beginTransaction();
+                session.save(code);
+                tx.commit();
+            }catch (RuntimeException re){
+                if(tx!=null)
+                    tx.rollback();
+                else System.err.println("Error hib " + re);
+            }
+        }
+        close();
         return null;
     }
 
@@ -50,7 +66,22 @@ public class CodeHbmRepo implements CodeRepo {
 
     @Override
     public Code Find(Long id) {
-        return null;
+        initialize();
+        Code found = null;
+        try(Session session = sessionFactory.openSession()){
+            Transaction tx = null;
+            try{
+                tx = session.beginTransaction();
+                found = session.createQuery("from Code where id=:id",Code.class).setParameter("id",id).getSingleResult();
+                tx.commit();
+            }catch (RuntimeException re){
+                if(tx!=null)
+                    tx.rollback();
+                else System.err.println("Error hib " + re);
+            }
+        }
+        close();
+        return found;
     }
 
     @Override

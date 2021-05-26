@@ -97,8 +97,8 @@
                                                         <Font name="System Bold" size="20.0" />
                                                     </font>
                                                 </Label>
-                                                <TextField GridPane.columnIndex="1" />
-                                                <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <TextField fx:id="titleCBox" GridPane.columnIndex="1" />
+                                                <TextField fx:id="descCBox" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                 <Label alignment="CENTER" prefHeight="30.0" prefWidth="197.0" text="No. of lines" GridPane.rowIndex="2">
                                                     <font>
                                                         <Font name="System Bold" size="20.0" />
@@ -109,11 +109,19 @@
                                                         <Font name="System Bold" size="20.0" />
                                                     </font>
                                                 </Label>
-                                                <Spinner prefHeight="26.0" prefWidth="178.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                <Spinner prefHeight="26.0" prefWidth="189.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                <Spinner fx:id="linesCBox" editable="true" prefHeight="26.0" prefWidth="178.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                    <valueFactory>
+                                                        <SpinnerValueFactory.IntegerSpinnerValueFactory amountToStepBy="100" max="10000000" min="100" />
+                                                    </valueFactory>
+                                                </Spinner>
+                                                <Spinner fx:id="hoursCBox" editable="true" prefHeight="26.0" prefWidth="189.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                    <valueFactory>
+                                                        <SpinnerValueFactory.IntegerSpinnerValueFactory max="10000" min="1" />
+                                                    </valueFactory>
+                                                </Spinner>
                                             </children>
                                         </GridPane>
-                                        <Button alignment="TOP_CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="174.0" text="Add code">
+                                        <Button fx:id="addCodeButton" alignment="TOP_CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="174.0" text="Add code">
                                             <font>
                                                 <Font name="System Bold" size="20.0" />
                                             </font>
@@ -169,12 +177,12 @@
                                       </TableView>
                               <HBox prefHeight="39.0" prefWidth="478.0" spacing="68.0">
                                  <children>
-                                    <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="205.0" text="Remove bug">
+                                    <Button fx:id="removeBugButton" mnemonicParsing="false" prefHeight="45.0" prefWidth="205.0" text="Remove bug">
                                        <font>
                                           <Font name="System Bold" size="20.0" />
                                        </font>
                                     </Button>
-                                    <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="205.0" text="Update bug status">
+                                    <Button fx:id="updateBugButton" mnemonicParsing="false" prefHeight="45.0" prefWidth="205.0" text="Update bug status">
                                        <font>
                                           <Font name="System Bold" size="20.0" />
                                        </font>
@@ -218,14 +226,14 @@
                                           <Font name="System Bold" size="20.0" />
                                        </font>
                                     </Label>
-                                    <TextField GridPane.columnIndex="1" />
-                                    <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <TextField fx:id="nameVBox" GridPane.columnIndex="1" />
+                                    <TextField fx:id="descVBox" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                  </children>
                                  <VBox.margin>
                                     <Insets />
                                  </VBox.margin>
                               </GridPane>
-                              <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="375.0" text="Register bug">
+                              <Button fx:id="addBugButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="375.0" text="Register bug">
                                  <font>
                                     <Font name="System Bold" size="20.0" />
                                  </font></Button>

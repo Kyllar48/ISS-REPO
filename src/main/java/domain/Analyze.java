@@ -9,6 +9,7 @@ public class Analyze extends Entity<Long>{
         this.verifierID = verifierID;
         this.bugID = bugID;
         this.codeID = codeID;
+        this.setId(0L);
     }
 
     public Analyze(){}
